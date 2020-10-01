@@ -34,7 +34,7 @@ class LabelOcrApp:
         self.mainwindow = builder.get_object('master', master)
         builder.connect_callbacks(self)
 
-        self.config_dir = ".ocr_labeling"
+        self.config_dir = os.path.join(os.path.expanduser("~"),".ocr_labeling")
         self.last_session_path = os.path.join(self.config_dir, 'last_session')
         if not os.path.exists(self.config_dir):
             os.makedirs(self.config_dir, exist_ok=True)

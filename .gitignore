@@ -3,3 +3,4 @@ dist
 labelocr.egg-info
 .ocr_labeling
 .idea
+__pycache__
