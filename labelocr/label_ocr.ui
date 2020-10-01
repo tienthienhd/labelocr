@@ -113,7 +113,6 @@
       <object class="tk.Entry" id="txt_label">
         <property name="font">{courier 10 pitch} 48 {bold}</property>
         <property name="justify">center</property>
-        <!-- <property name="text" translatable="yes"></property> -->
         <property name="textvariable">string:var_label</property>
         <bind add="" handler="change_txt_label" sequence="&lt;1&gt;" />
         <layout manager="place">
@@ -128,7 +127,7 @@
       </object>
     </child>
     <child>
-      <object class="tk.Button" id="button_5">
+      <object class="tk.Button" id="btn_generate">
         <property name="command">generate_tf</property>
         <property name="text" translatable="yes">Generate</property>
         <layout manager="place">
@@ -180,7 +179,7 @@
       </object>
     </child>
     <child>
-      <object class="tk.Button" id="button_9">
+      <object class="tk.Button" id="btn_next">
         <property name="command">next_img</property>
         <property name="text" translatable="yes">(Up) Next &gt;&gt;</property>
         <layout manager="place">
@@ -536,6 +535,37 @@
           <property name="relx">0.25</property>
           <property name="rely">0.83</property>
           <property name="width">60</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Button" id="btn_resize">
+        <property name="command">resize_img</property>
+        <property name="text" translatable="yes">Resize</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.82</property>
+          <property name="rely">0.23</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Scale" id="scale_image">
+        <property name="command">scale_image</property>
+        <property name="from_">10</property>
+        <property name="orient">horizontal</property>
+        <property name="to">600</property>
+        <property name="value">600</property>
+        <property name="variable">int:var_scale_width_img</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.82</property>
+          <property name="rely">0.26</property>
+          <property name="width">200</property>
           <property name="x">0</property>
           <property name="y">0</property>
         </layout>

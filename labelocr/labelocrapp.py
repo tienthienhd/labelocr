@@ -75,6 +75,10 @@ class LabelOcrApp:
         self.list_label = None
         self.index = None
 
+        self.cur_img = None
+        self.is_resized = True
+        self.scale_width_img = builder.get_variable("var_scale_width_img")
+
     def choose_image_dir(self):
         image_dir = filedialog.askdirectory(
             initialdir=PROJECT_PATH
@@ -95,7 +99,7 @@ class LabelOcrApp:
                 self.list_label = [os.path.splitext(os.path.basename(file))[0] for file in self.list_file]
                 self.list_label = [self._parse_label(x) for x in self.list_label]
             else:
-                df_label = pd.read_csv(self.label_path.get(), header=0, names=['filename', 'label'])
+                df_label = pd.read_csv(self.label_path.get(), header=0, names=['filename', 'label'], dtype={"filename": str, "label": str})
                 self.list_file = df_label['filename'].tolist()
                 self.list_label = df_label['label'].tolist()
             self._show_image()
@@ -125,7 +129,7 @@ class LabelOcrApp:
         if self.txt_label.focus_get() != ".!entry":
             if self.index < len(self.list_file) - 2:
                 self._save_label()
-                if self.index % 50:
+                if self.index % 50 == 0:
                     self.save_all()
                 self.index += 1
                 self._show_image()
@@ -147,6 +151,24 @@ class LabelOcrApp:
         )
         LOGGER.info("Choose output dir: {}".format(output_dir))
         self.output_path.set(output_dir)
+
+    def resize_img(self):
+        if self.is_resized:
+            img = ImageTk.PhotoImage(self.cur_img)
+        else:
+            img = ImageTk.PhotoImage(self.resize_image(self.cur_img, (600, 100)))
+
+        self.lbl_image.configure(image=img)
+        self.lbl_image.image = img
+        self.is_resized = not self.is_resized
+
+    def scale_image(self, event=None):
+        new_width = self.scale_width_img.get()
+        if new_width >= 6:
+            img = ImageTk.PhotoImage(self.resize_image(self.cur_img, (new_width, int(new_width / 6))))
+            self.lbl_image.configure(image=img)
+            self.lbl_image.image = img
+            self.is_resized = True
 
     def generate_tf(self):
         img_dir = self.image_dir.get()
@@ -197,6 +219,7 @@ class LabelOcrApp:
 
         self.master.bind('<Up>', self.next_img)
         self.master.bind('<Down>', self.prev_img)
+        self.master.bind('<Return>', self.next_img)
         self.master.protocol('WM_DELETE_WINDOW', self._save_last_config)
         self.mainwindow.mainloop()
         atexit.register(self._save_last_config)
@@ -215,11 +238,13 @@ class LabelOcrApp:
         LOGGER.info("Load image: {}: {}".format(filename, label))
         self.image_name.set(filename)
 
-        img_origin = self.resize_image(Image.open(os.path.join(self.image_dir.get(), filename)), (600, 100))
-        img_origin = ImageTk.PhotoImage(img_origin)
+        self.cur_img = img_origin = Image.open(os.path.join(self.image_dir.get(), filename))
+        img_resized = self.resize_image(img_origin, (600, 100))
+        self.is_resized = True
+        img_resized = ImageTk.PhotoImage(img_resized)
 
-        self.lbl_image.configure(image=img_origin)
-        self.lbl_image.image = img_origin
+        self.lbl_image.configure(image=img_resized)
+        self.lbl_image.image = img_resized
         # self.canvas.create_image(0, 0, image=img_origin, anchor=tk.NW)
 
         self.label_ocr.set(label)
@@ -270,7 +295,7 @@ class LabelOcrApp:
 
     def _save_label(self):
         if self.index is not None and self.index >= 0:
-            self.list_label[self.index] = self.label_ocr.get()
+            self.list_label[self.index] = self.label_ocr.get().strip()
 
     def show_exception_and_exit(self, exc_type, exc_value, tb):
         import traceback
@@ -519,7 +544,7 @@ def tf_records(img_dir, labels_file, start_index, end_index, output_dir, data_na
     test_writer = tf.io.TFRecordWriter(test_file)
 
     if labels_file is not None:
-        label_df = pd.read_csv(labels_file, header=0, names=['filename', 'label'])
+        label_df = pd.read_csv(labels_file, header=0, names=['filename', 'label'], dtype={"filename": str, "label": str})
     else:
         label_df = get_labels_in_filename(img_dir)
     label_df = label_df.iloc[start_index: end_index]
