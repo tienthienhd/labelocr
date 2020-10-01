@@ -32,51 +32,12 @@ def get_install_requires():
         "opencv-python==4.1.2.30",
         "numpy==1.16.6",
         "Pillow>=2.8.0",
-        "tensorflow==1.15.0",
+        "tensorflow>=1.15.0",
         "Pillow",
         "Deprecated",
         "pygubu",
         "pandas"
     ]
-
-    # Find python binding for qt with priority:
-    # PyQt5 -> PySide2 -> PyQt4,
-    # and PyQt5 is automatically installed on Python3.
-    QT_BINDING = None
-
-    try:
-        import PyQt5  # NOQA
-
-        QT_BINDING = "pyqt5"
-    except ImportError:
-        pass
-
-    if QT_BINDING is None:
-        try:
-            import PySide2  # NOQA
-
-            QT_BINDING = "pyside2"
-        except ImportError:
-            pass
-
-    if QT_BINDING is None:
-        try:
-            import PyQt4  # NOQA
-
-            QT_BINDING = "pyqt4"
-        except ImportError:
-            if PY2:
-                print(
-                    "Please install PyQt5, PySide2 or PyQt4 for Python2.\n"
-                    "Note that PyQt5 can be installed via pip for Python3.",
-                    file=sys.stderr,
-                )
-                sys.exit(1)
-            assert PY3
-            # PyQt5 can be installed via pip for Python3
-            install_requires.append("PyQt5")
-            QT_BINDING = "pyqt5"
-    del QT_BINDING
 
     if os.name == "nt":  # Windows
         install_requires.append("colorama")
@@ -87,14 +48,6 @@ def get_install_requires():
 def get_long_description():
     with open("README.md") as f:
         long_description = f.read()
-    try:
-        import github2pypi
-
-        return github2pypi.replace_url(
-            slug="wkentaro/labelme", content=long_description
-        )
-    except Exception:
-        return long_description
 
 
 def main():
@@ -123,38 +76,25 @@ def main():
         name="labelocr",
         version=version,
         packages=find_packages(exclude=["github2pypi"]),
-        description="Image Polygonal Annotation with Python",
+        description="Image OCR Annotation with Python",
         long_description=get_long_description(),
         long_description_content_type="text/markdown",
-        author="Kentaro Wada",
-        author_email="www.kentaro.wada@gmail.com",
-        url="https://github.com/wkentaro/labelme",
+        author="Thien NT",
+        author_email="tienthienhd@gmail.com",
+        url="https://github.com/tienthienhd/labelocr",
         install_requires=get_install_requires(),
-        license="GPLv3",
-        keywords="Image Annotation, Machine Learning",
+        license="LICENSE",
+        keywords="Image Annotation, Machine Learning, OCR",
         classifiers=[
-            "Development Status :: 5 - Production/Stable",
-            "Intended Audience :: Developers",
-            "Natural Language :: English",
-            "Programming Language :: Python",
-            "Programming Language :: Python :: 2.7",
-            "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6",
-            "Programming Language :: Python :: 3.7",
-            "Programming Language :: Python :: Implementation :: CPython",
-            "Programming Language :: Python :: Implementation :: PyPy",
+            "Programming Language :: Python :: 3.7"
         ],
-        package_data={"labelme": ["icons/*", "config/*.yaml"]},
+        package_data={"labelocr": ["icons/*", "label_ocr.ui"]},
         entry_points={
             "console_scripts": [
-                "labelme=labelme.__main__:main",
-                "labelme_draw_json=labelme.cli.draw_json:main",
-                "labelme_draw_label_png=labelme.cli.draw_label_png:main",
-                "labelme_json_to_dataset=labelme.cli.json_to_dataset:main",
-                "labelme_on_docker=labelme.cli.on_docker:main",
+                "labelocr=labelocr.labelocrapp:main"
             ],
-        },
-        data_files=[("share/man/man1", ["docs/man/labelme.1"])],
+        }
     )
 
 

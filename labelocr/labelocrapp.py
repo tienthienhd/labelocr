@@ -7,7 +7,7 @@ import shutil
 import sys
 import tkinter as tk
 import threading
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 
 import cv2
 import numpy as np
@@ -88,25 +88,40 @@ class LabelOcrApp:
         self.label_path.set(label_path)
 
     def load_data(self):
-        if self.label_in_filename:
-            self.list_file = list(glob.glob(f"{self.image_dir.get()}/*.png"))
-            self.list_label = [os.path.splitext(os.path.basename(file))[0] for file in self.list_file]
-            self.list_label = [self._parse_label(x) for x in self.list_label]
+        if self.image_dir.get() is not None and self.label_path.get() is not None and len(
+                self.image_dir.get()) > 0 and len(self.label_path.get()) > 0:
+            if self.label_in_filename:
+                self.list_file = list(glob.glob(f"{self.image_dir.get()}/*.png"))
+                self.list_label = [os.path.splitext(os.path.basename(file))[0] for file in self.list_file]
+                self.list_label = [self._parse_label(x) for x in self.list_label]
+            else:
+                df_label = pd.read_csv(self.label_path.get(), header=0, names=['filename', 'label'])
+                self.list_file = df_label['filename'].tolist()
+                self.list_label = df_label['label'].tolist()
+            self._show_image()
         else:
-            df_label = pd.read_csv(self.label_path.get(), header=0, names=['filename', 'label'])
-            self.list_file = df_label['filename'].tolist()
-            self.list_label = df_label['label'].tolist()
-        self._show_image()
+            messagebox.showerror("Input Error", "Please choose folder image and label file.")
+            LOGGER.info("Not found label to save.")
 
     def change_txt_label(self, event=None):
         self._save_label()
 
     def save_all(self):
-        LOGGER.info("Save all....")
-        df = pd.DataFrame({"filename": self.list_file, "label": self.list_label})
-        df.to_csv(self.label_path.get(), index=False)
+        if self.image_dir.get() is not None and self.label_path.get() is not None and len(
+                self.image_dir.get()) > 0 and len(self.label_path.get()) > 0:
+            LOGGER.info("Save all....")
+            if self.list_file is None or self.list_label is None:
+                messagebox.showerror("Input Error", "Please choose folder image and label file.")
+                LOGGER.info("Not found label to save.")
+                return
+            df = pd.DataFrame({"filename": self.list_file, "label": self.list_label})
+            df.to_csv(self.label_path.get(), index=False)
 
     def next_img(self, event=None):
+        if self.list_label is None or self.list_file is None:
+            messagebox.showerror("Input Error", "Please choose folder image and label file.")
+            LOGGER.info("Not found label to next.")
+            return
         if self.txt_label.focus_get() != ".!entry":
             if self.index < len(self.list_file) - 2:
                 self._save_label()
@@ -116,6 +131,10 @@ class LabelOcrApp:
                 self._show_image()
 
     def prev_img(self, event=None):
+        if self.list_label is None or self.list_file is None:
+            messagebox.showerror("Input Error", "Please choose folder image and label file.")
+            LOGGER.info("Not found label to next.")
+            return
         if self.txt_label.focus_get() != ".!entry":
             if self.index > 0:
                 self._save_label()
@@ -150,11 +169,19 @@ class LabelOcrApp:
         thread.start()
 
     def delete_image(self):
+        if self.list_label is None or self.list_file is None:
+            messagebox.showerror("Input Error", "Please choose folder image and label file.")
+            LOGGER.info("Not found label to delete.")
+            return
         self.list_file.pop(self.index)
         self.list_label.pop(self.index)
         self._show_image()
 
     def goto(self):
+        if self.list_label is None or self.list_file is None:
+            messagebox.showerror("Input Error", "Please choose folder image and label file.")
+            LOGGER.info("Not found label to goto.")
+            return
         input_index = self.index_goto.get()
         if len(self.list_file) > input_index >= 0:
             self._save_label()
@@ -164,7 +191,8 @@ class LabelOcrApp:
     def run(self):
         sys.excepthook = self.show_exception_and_exit
         self._read_last_config()
-        if self.image_dir.get() is not None and self.label_path.get() is not None:
+        if self.image_dir.get() is not None and self.label_path.get() is not None and len(
+                self.image_dir.get()) > 0 and len(self.label_path.get()) > 0:
             self.load_data()
 
         self.master.bind('<Up>', self.next_img)
@@ -178,6 +206,10 @@ class LabelOcrApp:
         return text.split("_")[1].strip()
 
     def _show_image(self):
+        if self.list_label is None or self.list_file is None:
+            messagebox.showerror("Input Error", "Please choose folder image and label file.")
+            LOGGER.info("Not found image to show.")
+            return
         filename = os.path.basename(self.list_file[self.index])
         label = self.list_label[self.index]
         LOGGER.info("Load image: {}: {}".format(filename, label))
@@ -237,7 +269,8 @@ class LabelOcrApp:
                     self.test_size.set(config['test_size'])
 
     def _save_label(self):
-        self.list_label[self.index] = self.label_ocr.get()
+        if self.index is not None and self.index >= 0:
+            self.list_label[self.index] = self.label_ocr.get()
 
     def show_exception_and_exit(self, exc_type, exc_value, tb):
         import traceback
@@ -552,7 +585,7 @@ def tf_records(img_dir, labels_file, start_index, end_index, output_dir, data_na
     print("Test file has : {:6} samples, that is saved at {}".format(n_test, test_file))
 
 
-if __name__ == '__main__':
+def main():
     root = tk.Tk()
     app = LabelOcrApp(root)
     app.run()

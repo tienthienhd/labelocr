@@ -113,7 +113,7 @@
       <object class="tk.Entry" id="txt_label">
         <property name="font">{courier 10 pitch} 48 {bold}</property>
         <property name="justify">center</property>
-        <property name="text" translatable="yes">459348534</property>
+        <!-- <property name="text" translatable="yes"></property> -->
         <property name="textvariable">string:var_label</property>
         <bind add="" handler="change_txt_label" sequence="&lt;1&gt;" />
         <layout manager="place">

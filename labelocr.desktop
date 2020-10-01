@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=LabelOcr
+Comment=Image Ocr Annotation with Python
+Exec=labelocr
+Icon=labelocr
+Terminal=false
+Type=Application
+Categories=Graphics;RasterGraphics;

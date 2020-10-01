@@ -6,3 +6,4 @@ __appname__ = "labelocr"
 # 2. MINOR version when you add functionality in a backwards-compatible manner;
 # 3. PATCH version when you make backwards-compatible bug fixes.
 __version__ = "1.0.0"
+

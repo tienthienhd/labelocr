@@ -1,0 +1,5 @@
+build
+dist
+labelocr.egg-info
+.ocr_labeling
+.idea
