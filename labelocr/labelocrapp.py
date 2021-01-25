@@ -13,7 +13,7 @@ import cv2
 import numpy as np
 import pandas as pd
 import pygubu
-import tensorflow as tf
+# import tensorflow as tf
 from PIL import Image, ImageTk
 from deprecated import deprecated
 

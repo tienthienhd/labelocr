@@ -1,0 +1,498 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.0">
+  <object class="tk.Frame" id="frame_1">
+    <property name="height">700</property>
+    <property name="width">1200</property>
+    <layout manager="place">
+      <property name="anchor">nw</property>
+      <property name="x">0</property>
+      <property name="y">0</property>
+    </layout>
+    <child>
+      <object class="tk.Entry" id="txt_label_path">
+        <property name="textvariable">string:var_label_path</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.75</property>
+          <property name="rely">0.1</property>
+          <property name="width">500</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_image_dir">
+        <property name="textvariable">string:var_img_dir</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.25</property>
+          <property name="rely">0.1</property>
+          <property name="width">500</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_name">
+        <property name="textvariable">string:var_name</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.2</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_address">
+        <property name="textvariable">string:var_address</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.25</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_brand">
+        <property name="textvariable">string:var_brand</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.3</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_type">
+        <property name="textvariable">string:var_type</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.35</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_color">
+        <property name="textvariable">string:var_color</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.4</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_origin">
+        <property name="textvariable">string:var_origin</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.45</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_seat_capacity">
+        <property name="textvariable">string:var_seat</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.5</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_plate">
+        <property name="textvariable">string:var_plate</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.55</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_first_registration">
+        <property name="textvariable">string:var_first_reg</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.6</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_engine">
+        <property name="textvariable">string:var_engine</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.65</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_chassis">
+        <property name="textvariable">string:var_chassis</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.7</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_model_code">
+        <property name="textvariable">string:var_model_code</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.75</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_capacity">
+        <property name="textvariable">string:var_capacity</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.8</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_issue_by">
+        <property name="textvariable">string:var_issue_by</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.85</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Entry" id="txt_issue_date">
+        <property name="textvariable">string:var_issue_date</property>
+        <layout manager="place">
+          <property name="relx">0.8</property>
+          <property name="rely">0.9</property>
+          <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Button" id="btn_load_data">
+        <property name="text" translatable="yes">Load Data</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.5</property>
+          <property name="rely">0.15</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="img">
+        <property name="text" translatable="yes">Image</property>
+        <layout manager="place">
+          <property name="height">400</property>
+          <property name="relx">0.03</property>
+          <property name="rely">0.24</property>
+          <property name="width">600</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Button" id="btn_save">
+        <property name="text" translatable="yes">Save</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.5</property>
+          <property name="rely">0.95</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Button" id="btn_prev">
+        <property name="text" translatable="yes">Prev</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.4</property>
+          <property name="rely">0.95</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Button" id="btn_next">
+        <property name="text" translatable="yes">Next</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.6</property>
+          <property name="rely">0.95</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="label_2">
+        <property name="text" translatable="yes">Label path</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.75</property>
+          <property name="rely">0.05</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="label_img_dir">
+        <property name="text" translatable="yes">Image dir</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.25</property>
+          <property name="rely">0.05</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_name">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Name:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.2</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_address">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Address:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.25</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_brand">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Brand:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.3</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_type">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Type:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.35</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_color">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Color:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.4</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_origin">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Origin:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.45</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_seat_cap">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Seat Cap:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.5</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_plate">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Plate:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.55</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_first_reg">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">First_reg:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.6</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_engine">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Engine:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.65</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_chassis">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Chassis:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.7</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_model_code">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Model_code:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.75</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_capacity">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Capacity:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.8</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_isssue_by">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Issue by:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.85</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Label" id="lbl_issue_date">
+        <property name="takefocus">true</property>
+        <property name="text" translatable="yes">Issue date:</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.7</property>
+          <property name="rely">0.9</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -29,11 +29,9 @@ def get_install_requires():
     assert PY3 or PY2
 
     install_requires = [
-        "opencv-python==4.1.2.30",
-        "numpy==1.16.6",
-        "Pillow>=2.8.0",
-        "tensorflow>=1.15.0",
-        "Pillow",
+        "opencv-python",
+        "numpy",
+        "Pillow==8.0.1",
         "Deprecated",
         "pygubu",
         "pandas"
