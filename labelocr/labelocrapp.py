@@ -50,6 +50,8 @@ class LabelOcrApp:
 
         self.canvas = builder.get_object("canvas")
         self.lbl_image = builder.get_object("lbl_image")
+        self.btn_keep_exist_label = builder.get_object("btn_keep_exist_label")
+        self.keep_exist_label = True#builder.get_variable("keep_exist_label")
 
         self.progress_label = builder.get_variable("var_progress_label")
 
@@ -130,6 +132,17 @@ class LabelOcrApp:
                 self.index -= 1
                 self._show_image()
 
+    def change_keep_exist_label(self, event=None):
+        self.keep_exist_label = not self.keep_exist_label
+        if self.keep_exist_label:
+            self.btn_keep_exist_label.select()
+        else:
+            self.btn_keep_exist_label.deselect()
+        self._show_image()
+
+    def clean_text(self, event=None):
+        self.label_ocr.set("")
+
     def choose_output_tf(self):
         output_dir = filedialog.askdirectory(
             initialdir=PROJECT_PATH
@@ -185,6 +198,7 @@ class LabelOcrApp:
         self.master.bind('<Up>', self.next_img)
         self.master.bind('<Down>', self.prev_img)
         self.master.bind('<Return>', self.next_img)
+        self.master.bind('<Escape>', self.clean_text)
         self.master.protocol('WM_DELETE_WINDOW', self._save_last_config)
         self.mainwindow.mainloop()
         atexit.register(self._save_last_config)
@@ -213,8 +227,9 @@ class LabelOcrApp:
 
         self.scale_image()
         # self.canvas.create_image(0, 0, image=img_origin, anchor=tk.NW)
-
-        self.label_ocr.set(label)
+        self.label_ocr.set("")
+        if self.keep_exist_label:
+            self.label_ocr.set(label)
 
         self.progress_label.set((self.index + 1) / len(self.list_label))
         self.cur_index.set(f"Index: {self.index + 1}/{len(self.list_file)}")

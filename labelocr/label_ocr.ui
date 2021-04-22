@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<interface version="1.0">
+<interface version="1.1">
   <object class="ttk.Frame" id="master">
     <property name="height">600</property>
     <property name="width">1300</property>
@@ -26,7 +26,7 @@
     <child>
       <object class="tk.Button" id="btn_load_data">
         <property name="background">#54ff30</property>
-        <property name="command">load_data</property>
+        <property name="command" type="command" cbtype="simple" args="">load_data</property>
         <property name="foreground">#293114</property>
         <property name="justify">center</property>
         <property name="takefocus">true</property>
@@ -42,7 +42,7 @@
     </child>
     <child>
       <object class="tk.Button" id="btn_open_image_dir">
-        <property name="command">choose_image_dir</property>
+        <property name="command" type="command" cbtype="simple" args="">choose_image_dir</property>
         <property name="text" translatable="yes">Choose Image Dir</property>
         <layout manager="place">
           <property name="anchor">center</property>
@@ -56,7 +56,7 @@
     <child>
       <object class="tk.Button" id="btn_delete_img">
         <property name="background">#c32e21</property>
-        <property name="command">delete_image</property>
+        <property name="command" type="command" cbtype="simple" args="">delete_image</property>
         <property name="text" translatable="yes">Delete</property>
         <layout manager="place">
           <property name="anchor">center</property>
@@ -69,7 +69,7 @@
     </child>
     <child>
       <object class="tk.Button" id="btn_open_label">
-        <property name="command">choose_label_file</property>
+        <property name="command" type="command" cbtype="simple" args="">choose_label_file</property>
         <property name="text" translatable="yes">Choose Label File</property>
         <layout manager="place">
           <property name="anchor">center</property>
@@ -112,7 +112,7 @@
     </child>
     <child>
       <object class="tk.Button" id="btn_prev_img">
-        <property name="command">prev_img</property>
+        <property name="command" type="command" cbtype="simple" args="">prev_img</property>
         <property name="text" translatable="yes">&lt;&lt; Prev (Down)</property>
         <layout manager="place">
           <property name="anchor">center</property>
@@ -125,7 +125,7 @@
     </child>
     <child>
       <object class="tk.Button" id="btn_save_all">
-        <property name="command">save_all</property>
+        <property name="command" type="command" cbtype="simple" args="">save_all</property>
         <property name="text" translatable="yes">Save All</property>
         <layout manager="place">
           <property name="anchor">center</property>
@@ -138,7 +138,7 @@
     </child>
     <child>
       <object class="tk.Button" id="btn_next">
-        <property name="command">next_img</property>
+        <property name="command" type="command" cbtype="simple" args="">next_img</property>
         <property name="text" translatable="yes">(Up) Next &gt;&gt;</property>
         <layout manager="place">
           <property name="anchor">center</property>
@@ -190,7 +190,7 @@
     </child>
     <child>
       <object class="tk.Button" id="btn_goto">
-        <property name="command">goto</property>
+        <property name="command" type="command" cbtype="simple" args="">goto</property>
         <property name="text" translatable="yes">Goto</property>
         <layout manager="place">
           <property name="anchor">center</property>
@@ -273,7 +273,7 @@
     </child>
     <child>
       <object class="tk.Button" id="btn_resize">
-        <property name="command">resize_img</property>
+        <property name="command" type="command" cbtype="simple" args="">resize_img</property>
         <property name="text" translatable="yes">Resize</property>
         <layout manager="place">
           <property name="anchor">center</property>
@@ -286,7 +286,7 @@
     </child>
     <child>
       <object class="ttk.Scale" id="scale_image">
-        <property name="command">scale_image</property>
+        <property name="command" type="command" cbtype="simple" args="">scale_image</property>
         <property name="from_">10</property>
         <property name="orient">horizontal</property>
         <property name="to">600</property>
@@ -297,6 +297,32 @@
           <property name="relx">0.82</property>
           <property name="rely">0.5</property>
           <property name="width">200</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Checkbutton" id="btn_keep_exist_label">
+        <property name="command" type="command" cbtype="simple">change_keep_exist_label</property>
+        <property name="text" translatable="yes">Keep exist label</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.1</property>
+          <property name="rely">0.4</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Button" id="btn_clean">
+        <property name="command" type="command" cbtype="simple">clean_text</property>
+        <property name="text" translatable="yes">clean</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relx">0.1</property>
+          <property name="rely">0.6</property>
           <property name="x">0</property>
           <property name="y">0</property>
         </layout>
