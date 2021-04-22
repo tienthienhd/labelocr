@@ -244,10 +244,11 @@ class LabelOcrApp:
         if self.remove_accent:
             label = remove_accents(label)
 
-        # self.label_ocr.set("")
         self.label_ocr_show.set(label)
         if self.keep_exist_label:
             self.label_ocr.set(label)
+        else:
+            self.label_ocr.set("")
 
         self.progress_label.set((self.index + 1) / len(self.list_label))
         self.cur_index.set(f"Index: {self.index + 1}/{len(self.list_file)}")
