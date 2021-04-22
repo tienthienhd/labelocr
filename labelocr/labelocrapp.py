@@ -7,6 +7,7 @@ import shutil
 import sys
 import tkinter as tk
 import threading
+import unicodedata
 from tkinter import filedialog, messagebox
 
 import cv2
@@ -43,6 +44,7 @@ class LabelOcrApp:
         self.label_in_filename = None  # Not use in the future
         self.image_name = builder.get_variable("var_image_name")
         self.label_ocr = builder.get_variable("var_label")
+        self.label_ocr_show = builder.get_variable("var_label_show")
         self.cur_index = builder.get_variable("var_cur_index")
         self.txt_label = builder.get_object("txt_label")
 
@@ -50,8 +52,12 @@ class LabelOcrApp:
 
         self.canvas = builder.get_object("canvas")
         self.lbl_image = builder.get_object("lbl_image")
+
         self.btn_keep_exist_label = builder.get_object("btn_keep_exist_label")
-        self.keep_exist_label = True#builder.get_variable("keep_exist_label")
+        self.keep_exist_label = True
+
+        self.btn_remove_accent = builder.get_object("btn_remove_accent")
+        self.remove_accent = False
 
         self.progress_label = builder.get_variable("var_progress_label")
 
@@ -138,6 +144,14 @@ class LabelOcrApp:
             self.btn_keep_exist_label.select()
         else:
             self.btn_keep_exist_label.deselect()
+        self._show_image()
+
+    def change_remove_accent(self, event=None):
+        self.remove_accent = not self.remove_accent
+        if self.remove_accent:
+            self.btn_remove_accent.select()
+        else:
+            self.btn_remove_accent.deselect()
         self._show_image()
 
     def clean_text(self, event=None):
@@ -227,7 +241,11 @@ class LabelOcrApp:
 
         self.scale_image()
         # self.canvas.create_image(0, 0, image=img_origin, anchor=tk.NW)
-        self.label_ocr.set("")
+        if self.remove_accent:
+            label = remove_accents(label)
+
+        # self.label_ocr.set("")
+        self.label_ocr_show.set(label)
         if self.keep_exist_label:
             self.label_ocr.set(label)
 
@@ -260,7 +278,9 @@ class LabelOcrApp:
 
     def _save_label(self):
         if self.index is not None and self.index >= 0:
-            self.list_label[self.index] = self.label_ocr.get().strip()
+            if len(self.label_ocr.get().strip()) > 0:
+                self.label_ocr_show.set(self.label_ocr.get())
+            self.list_label[self.index] = self.label_ocr_show.get().strip()
 
     def show_exception_and_exit(self, exc_type, exc_value, tb):
         import traceback
@@ -290,6 +310,14 @@ class LabelOcrApp:
 
         mask[0:new_h, 0:new_w] = tmp_img
         return Image.fromarray(mask.astype(np.uint8))
+
+
+def remove_accents(input_str):
+    if input_str is None:
+        return None
+    nfkd_form = unicodedata.normalize('NFKD', input_str)
+    only_ascii = nfkd_form.encode('ASCII', 'ignore')
+    return only_ascii.decode('utf8')
 
 
 NULL_CHAR = '<nul>'
