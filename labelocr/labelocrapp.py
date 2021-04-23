@@ -55,9 +55,21 @@ class LabelOcrApp:
 
         self.btn_keep_exist_label = builder.get_object("btn_keep_exist_label")
         self.keep_exist_label = True
+        self.btn_keep_exist_label.select()
 
         self.btn_remove_accent = builder.get_object("btn_remove_accent")
         self.remove_accent = False
+
+        self.btn_upper = builder.get_object("btn_upper")
+        self.upper_case = False
+
+        self.btn_title = builder.get_object("btn_title")
+        self.title_case = False
+
+        self.btn_lower = builder.get_object("btn_lower")
+        self.lower_case = False
+
+
 
         self.progress_label = builder.get_variable("var_progress_label")
 
@@ -140,6 +152,7 @@ class LabelOcrApp:
 
     def change_keep_exist_label(self, event=None):
         self.keep_exist_label = not self.keep_exist_label
+        LOGGER.info(f"Change_keep_exist_label: {self.keep_exist_label}")
         if self.keep_exist_label:
             self.btn_keep_exist_label.select()
         else:
@@ -148,10 +161,55 @@ class LabelOcrApp:
 
     def change_remove_accent(self, event=None):
         self.remove_accent = not self.remove_accent
+        LOGGER.info(f"change_remove_accent: {self.remove_accent}")
         if self.remove_accent:
             self.btn_remove_accent.select()
         else:
             self.btn_remove_accent.deselect()
+        self._show_image()
+
+    def change_upper(self, event=None):
+        if self.title_case:
+            self.change_title()
+        if self.lower_case:
+            self.change_lower()
+
+        self.upper_case = not self.upper_case
+        LOGGER.info(f"change_upper: {self.upper_case}")
+        if self.upper_case:
+            self.btn_upper.select()
+        else:
+            self.btn_upper.deselect()
+        self._show_image()
+
+    def change_title(self, event=None):
+        if self.upper_case:
+            self.change_upper()
+        if self.lower_case:
+            self.change_lower()
+
+        self.title_case = not self.title_case
+        LOGGER.info(f"change_title: {self.title_case}")
+
+        if self.title_case:
+            self.btn_title.select()
+        else:
+            self.btn_title.deselect()
+        self._show_image()
+
+    def change_lower(self, event=None):
+        if self.title_case:
+            self.change_title()
+        if self.upper_case:
+            self.change_upper()
+
+        self.lower_case = not self.lower_case
+        LOGGER.info(f"change_lower: {self.lower_case}")
+
+        if self.lower_case:
+            self.btn_lower.select()
+        else:
+            self.btn_lower.deselect()
         self._show_image()
 
     def clean_text(self, event=None):
@@ -243,6 +301,15 @@ class LabelOcrApp:
         # self.canvas.create_image(0, 0, image=img_origin, anchor=tk.NW)
         if self.remove_accent:
             label = remove_accents(label)
+
+        if self.upper_case:
+            label = label.upper()
+
+        if self.lower_case:
+            label = label.lower()
+
+        if self.title_case:
+            label = label.title()
 
         self.label_ocr_show.set(label)
         if self.keep_exist_label:
