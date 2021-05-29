@@ -102,7 +102,7 @@ class LabelOcrApp:
                 self.list_label = [self._parse_label(x) for x in self.list_label]
             else:
                 df_label = pd.read_csv(self.label_path.get(), header=0, names=['filename', 'label'],
-                                       dtype={"filename": object, "label": object})
+                                       dtype={"filename": object, "label": object}, keep_default_na=False, na_values=[''])
                 self.list_file = df_label['filename'].tolist()
                 self.list_label = df_label['label'].tolist()
             if self.index >= len(self.list_file):
