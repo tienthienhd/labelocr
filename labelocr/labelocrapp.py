@@ -1,12 +1,11 @@
 import atexit
+import csv
 import glob
 import json
 import logging
 import os
-import shutil
 import sys
 import tkinter as tk
-import threading
 import unicodedata
 from tkinter import filedialog, messagebox
 
@@ -47,6 +46,8 @@ class LabelOcrApp:
         self.label_ocr_show = builder.get_variable("var_label_show")
         self.cur_index = builder.get_variable("var_cur_index")
         self.txt_label = builder.get_object("txt_label")
+        self.label_score = builder.get_variable('var_score')
+        self.filter_score = builder.get_variable("var_filter_score")
 
         self.index_goto = builder.get_variable("var_index_goto")
 
@@ -69,12 +70,11 @@ class LabelOcrApp:
         self.btn_lower = builder.get_object("btn_lower")
         self.lower_case = False
 
-
-
         self.progress_label = builder.get_variable("var_progress_label")
 
         self.list_file = None
         self.list_label = None
+        self.list_score = None
         self.index = None
 
         self.cur_img = None
@@ -95,16 +95,20 @@ class LabelOcrApp:
 
     def load_data(self):
         if self.image_dir.get() is not None and self.label_path.get() is not None and len(
-                self.image_dir.get()) > 0 and len(self.label_path.get()) > 0 and os.path.exists(self.image_dir.get()) and os.path.exists(self.label_path.get()):
+                self.image_dir.get()) > 0 and len(self.label_path.get()) > 0 and os.path.exists(
+            self.image_dir.get()) and os.path.exists(self.label_path.get()):
             if self.label_in_filename:
                 self.list_file = list(glob.glob(f"{self.image_dir.get()}/*.png"))
                 self.list_label = [os.path.splitext(os.path.basename(file))[0] for file in self.list_file]
                 self.list_label = [self._parse_label(x) for x in self.list_label]
             else:
-                df_label = pd.read_csv(self.label_path.get(), header=0, names=['filename', 'label'],
-                                       dtype={"filename": object, "label": object}, keep_default_na=False, na_values=[''])
+                df_label = pd.read_csv(self.label_path.get(), header=0,
+                                       dtype={"filename": object, "label": object}, keep_default_na=False,
+                                       na_values=[''])
                 self.list_file = df_label['filename'].tolist()
                 self.list_label = df_label['label'].tolist()
+                if 'conf' in df_label.columns:
+                    self.list_score = df_label['conf'].tolist()
             if self.index >= len(self.list_file):
                 self.index = len(self.list_file) - 1
             self._show_image()
@@ -123,8 +127,31 @@ class LabelOcrApp:
                 messagebox.showerror("Input Error", "Please choose folder image and label file.")
                 LOGGER.info("Not found label to save.")
                 return
-            df = pd.DataFrame({"filename": self.list_file, "label": self.list_label})
-            df.to_csv(self.label_path.get(), index=False)
+            data = {"filename": self.list_file, "label": self.list_label}
+            if self.list_score is not None:
+                data['conf'] = self.list_score
+            df = pd.DataFrame(data)
+            df.to_csv(self.label_path.get(), index=False, quoting=csv.QUOTE_ALL)
+
+    def _get_next_idx(self, is_next=True) -> int:
+        current_idx = self.index
+        step = 1 if is_next else -1
+        if self.list_score is None:
+            return current_idx + step
+        filter_score = self.filter_score.get().strip()
+        try:
+            filter_score = float(filter_score)
+            if is_next:
+                for i in range(current_idx + 1, len(self.list_score)):
+                    if self.list_score[i] < filter_score:
+                        return i
+            else:
+                for i in range(current_idx - 1, 0, -1):
+                    if self.list_score[i] < filter_score:
+                        return i
+
+        except:
+            return current_idx + step
 
     def next_img(self, event=None):
         if self.list_label is None or self.list_file is None:
@@ -136,7 +163,7 @@ class LabelOcrApp:
                 self._save_label()
                 if self.index % 50 == 0:
                     self.save_all()
-                self.index += 1
+                self.index = self._get_next_idx(True)
                 self._show_image()
 
     def prev_img(self, event=None):
@@ -147,7 +174,7 @@ class LabelOcrApp:
         if self.txt_label.focus_get() != ".!entry":
             if self.index > 0:
                 self._save_label()
-                self.index -= 1
+                self.index = self._get_next_idx(False)
                 self._show_image()
 
     def change_keep_exist_label(self, event=None):
@@ -247,6 +274,7 @@ class LabelOcrApp:
             return
         self.list_file.pop(self.index)
         self.list_label.pop(self.index)
+        self.list_score.pop(self.index)
         self._show_image()
 
     def goto(self):
@@ -286,6 +314,8 @@ class LabelOcrApp:
             return
         filename = os.path.basename(self.list_file[self.index])
         label = self.list_label[self.index]
+        if self.list_score is not None:
+            self.label_score.set(self.list_score[self.index])
         LOGGER.info("Load image: {}: {}".format(filename, label))
         self.image_name.set(filename)
 
