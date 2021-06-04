@@ -274,7 +274,8 @@ class LabelOcrApp:
             return
         self.list_file.pop(self.index)
         self.list_label.pop(self.index)
-        self.list_score.pop(self.index)
+        if self.list_score:
+            self.list_score.pop(self.index)
         self._show_image()
 
     def goto(self):
