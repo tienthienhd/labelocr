@@ -75,7 +75,7 @@ class LabelOcrApp:
         self.list_file = None
         self.list_label = None
         self.list_score = None
-        self.index = None
+        self.index = 0
 
         self.cur_img = None
         self.is_resized = True
