@@ -109,6 +109,11 @@ class LabelOcrApp:
                 self.list_label = df_label['label'].tolist()
                 if 'conf' in df_label.columns:
                     self.list_score = df_label['conf'].tolist()
+                    for i in range(len(self.list_score)):
+                        try:
+                            self.list_score[i] = float(self.list_score[i])
+                        except:
+                            pass
             if self.index >= len(self.list_file):
                 self.index = len(self.list_file) - 1
             self._show_image()
