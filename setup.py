@@ -31,7 +31,7 @@ def get_install_requires():
     install_requires = [
         "opencv-python",
         "numpy",
-        "Pillow==8.0.1",
+        "Pillow==9.5.0",
         "Deprecated",
         "pygubu",
         "pandas"
